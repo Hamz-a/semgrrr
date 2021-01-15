@@ -1,0 +1,27 @@
+rules:
+- id: dart-io-httpclient-insecure-connection
+  metadata:
+    owasp: 'M3: Insecure Communication'
+    references:
+    - https://api.flutter.dev/flutter/dart-io/HttpClient/badCertificateCallback.html
+    - https://api.flutter.dev/flutter/dart-io/HttpClient-class.html
+    description: >-
+      The {app_name} mobile app for Android and iOS make use of encrypted connections (TLS) for the security of its data traffic. The security of TLS certificates is based on the trust of different publishing parties. Only when a client accepts the publisher of a certificate, a secure connection is allowed.
+      The {app_name} mobile apps are built using the Flutter framework and make use of the HttpClient class to perform HTTPS requests. This class contains a badCertificateCallback property which allows to define a custom callback for certificate verification.
+      The currently implemented certificate callback always returns true. This means that every connection is accepted by the app. An attacker performing a Man-in-the-Middle attack can therefore hijack any TLS connection of the {app_name} mobile apps. A successful attack allows for the viewing and manipulation of any data traffic.
+    risk: >-
+      An attacker can hijack any TLS connection of the {app_name} mobile apps during a Man-in-the-middle attack. This can lead into theft of user data. The probability for a successful Man-in-the-Middle (MitM) attack is considered low as the attacker needs to find a suitable position in the network to perform such an attack.
+    recommendation: >-
+      Do not always return true in the badCertificateCallback callback. Instead, implement certificate pinning for the {app_name} mobile apps. This can be achieved in different ways. It’s possible to pin specific publishers (root-certificate pinning), or to pin sub-publishers (leaf-certificate pinning). It’s also possible to pin the public key of specific certificates. Every solution has impact on the security and the maintainability of the application. More information about certificate pinning can be found on the following location:
+      • https://www.owasp.org/index.php/Certificate_and_Public_Key_Pinning
+      • https://medium.com/surfstudio/ssl-pinning-in-flutter-apps-254e01e57965
+  message: >-
+
+    HttpClient allows arbitrary certificates which allows for Man-in-the-Middle attacks.
+  languages: [generic]
+  severity: ERROR
+  pattern: $CLIENT.badCertificateCallback = (..., ..., ...) => true;
+  paths:
+    include:
+      - "*.dart"
+ 
