@@ -1,0 +1,17 @@
+rules:
+- id: android-manifest-is-debuggable
+  metadata:
+    owasp: 'M8: Code Tampering'
+    references:
+    - https://labs.mwrinfosecurity.com/blog/debuggable-apps-in-android-market/
+    - https://developer.android.com/guide/topics/manifest/application-element#debug
+  message: >-
+
+    Android app is built in debug mode.
+  languages: [generic]
+  severity: ERROR
+  pattern: <application...android:debuggable="true"
+  paths:
+    include:
+      - "AndroidManifest.xml"
+ 
