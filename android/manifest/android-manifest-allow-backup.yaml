@@ -1,0 +1,21 @@
+rules:
+- id: android-manifest-allow-backup
+  metadata:
+    owasp: 'M2: Insecure Data Storage'
+    references:
+    - https://developer.android.com/guide/topics/data/autobackup.html
+  message: >-
+
+    Potential data leak via automatic backups.
+  languages: [generic]
+  severity: ERROR
+  patterns:
+    - pattern-either: 
+      - pattern: <application...>
+      - pattern: <application...android:allowBackup="true"
+    - pattern-not: |
+        <application...android:allowBackup...>
+  paths:
+    include:
+      - "AndroidManifest.xml"
+ 
