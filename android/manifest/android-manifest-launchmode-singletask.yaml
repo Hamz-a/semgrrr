@@ -1,0 +1,16 @@
+rules:
+- id: android-manifest-launchmode-singletask
+  metadata:
+    owasp: 'M1: Code Tampering'
+    references:
+    - https://www.usenix.org/system/files/conference/usenixsecurity15/sec15-paper-ren-chuangang.pdf
+  message: >-
+
+    Potential Task Poisoning in Android app.
+  languages: [generic]
+  severity: ERROR
+  pattern: <activity...android:launchMode="singleTask"
+  paths:
+    include:
+      - "AndroidManifest.xml"
+ 
