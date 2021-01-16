@@ -6,7 +6,7 @@ rules:
     - https://developer.android.com/guide/topics/data/autobackup.html
   message: >-
 
-    Potential data leak via automatic backups.
+    Potential data leak via automatic backups in Android app.
   languages: [generic]
   severity: ERROR
   patterns:
