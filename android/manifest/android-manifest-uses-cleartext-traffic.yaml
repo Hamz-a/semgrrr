@@ -1,0 +1,16 @@
+rules:
+- id: android-manifest-uses-cleartext-traffic
+  metadata:
+    owasp: 'M3: Insecure Communication'
+    references:
+    - https://developer.android.com/guide/topics/manifest/application-element#usesCleartextTraffic
+  message: >-
+
+    Indication that the Android appp might use cleartext traffic.
+  languages: [generic]
+  severity: ERROR
+  pattern: <application...android:usesCleartextTraffic="true"...>
+  paths:
+    include:
+      - "AndroidManifest.xml"
+ 
