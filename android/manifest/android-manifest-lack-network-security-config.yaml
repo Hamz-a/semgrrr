@@ -1,0 +1,20 @@
+rules:
+- id: android-manifest-lack-network-security-config
+  metadata:
+    owasp: 'M3: Insecure Communication'
+    references:
+    - https://developer.android.com/training/articles/security-config
+  message: >-
+
+    Lack of Network Security Config in Android app.
+  languages: [generic]
+  severity: ERROR
+  patterns:
+    - pattern-either: 
+      - pattern: <application...>
+    - pattern-not: |
+        <application...android:networkSecurityConfig=...>
+  paths:
+    include:
+      - "AndroidManifest.xml"
+ 
