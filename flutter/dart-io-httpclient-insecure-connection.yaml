@@ -20,8 +20,12 @@ rules:
     HttpClient allows arbitrary certificates which allows for Man-in-the-Middle attacks.
   languages: [generic]
   severity: ERROR
-  pattern: $CLIENT.badCertificateCallback = (..., ..., ...) => true;
+  pattern-either:
+    - pattern: .badCertificateCallback = (..., ..., ...) => true;
+    - pattern: |
+        $TRUE = true;
+        ... 
+        .badCertificateCallback = (..., ..., ...) => $TRUE;
   paths:
     include:
       - "*.dart"
- 
