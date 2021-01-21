@@ -1,0 +1,27 @@
+rules:
+- id: ios-info-plist-ats-disabled
+  metadata:
+    owasp: 'M3: Insecure Communication'
+    references:
+    - https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW33
+  message: >-
+
+    Indication that the iOS app might use cleartext traffic.
+  languages: [generic]
+  severity: ERROR
+  patterns:
+    - pattern: |
+          <key>NSAppTransportSecurity</key>
+          <dict>
+          ...
+          <key>$KEY</key>
+          <true/>
+          ...
+          </dict>
+    - metavariable-regex:
+        metavariable: $KEY
+        regex: \b(NSAllowsArbitraryLoadsInWebContent|NSAllowsArbitraryLoadsForMedia|NSAllowsArbitraryLoads)\b
+  paths:
+    include:
+      - "Info.plist"
+ 
