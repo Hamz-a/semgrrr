@@ -6,7 +6,7 @@ rules:
     - https://developer.android.com/guide/topics/manifest/application-element#usesCleartextTraffic
   message: >-
 
-    Indication that the Android appp might use cleartext traffic.
+    Indication that the Android app might use cleartext traffic.
   languages: [generic]
   severity: ERROR
   pattern: <application...android:usesCleartextTraffic="true"...>
