@@ -1,0 +1,37 @@
+rules:
+- id: ios-appdelegate-dataleak-snapshots-swift
+  metadata:
+    owasp: 'M1: Improper Platform Usage'
+    references:
+    - https://stackoverflow.com/questions/7520076/prevent-ios-from-taking-screen-capture-of-app-before-going-into-background
+  message: >-
+
+    Indication that the iOS app might leak data via iOS snapshots.
+  languages: [generic]
+  severity: ERROR
+  patterns:
+    - pattern: |
+        class $CLASS:...$INTERFACE {
+          ...
+        }
+    - pattern-not: |
+        class $CLASS:...$INTERFACE {
+          ...
+          applicationWillResignActive
+          ...
+        }
+    - pattern-not: |
+        class $CLASS:...$INTERFACE {
+          ...
+          applicationDidEnterBackground
+          ...
+        }
+    - metavariable-regex:
+        metavariable: $CLASS
+        regex: \w*App(lication)?Delegate
+    - metavariable-regex:
+        metavariable: $INTERFACE
+        regex: \w*App(lication)?Delegate
+  paths:
+    include:
+      - "*AppDelegate.swift"
