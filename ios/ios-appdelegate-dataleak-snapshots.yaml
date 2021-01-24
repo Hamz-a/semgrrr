@@ -35,3 +35,40 @@ rules:
   paths:
     include:
       - "*AppDelegate.swift"
+
+- id: ios-appdelegate-dataleak-snapshots-objc
+  metadata:
+    owasp: 'M1: Improper Platform Usage'
+    references:
+    - https://stackoverflow.com/questions/7520076/prevent-ios-from-taking-screen-capture-of-app-before-going-into-background
+  message: >-
+
+    Indication that the iOS app might leak data via iOS snapshots.
+  languages: [generic]
+  severity: ERROR
+  patterns:
+  - pattern: | # hack it until you make it
+      @implementation $CLASS
+      ... ... ... ... ... ... ... ...
+      ... ... ... ... ... ... ... ...
+      @end
+  - pattern-not: |
+      @implementation $CLASS
+      ... ... ... ... ... ... ... ...
+      applicationWillResignActive
+      ... ... ... ... ... ... ... ...
+      @end
+  - pattern-not: |
+      @implementation $CLASS
+      ... ... ... ... ... ... ... ...
+      applicationDidEnterBackground
+      ... ... ... ... ... ... ... ...
+      @end
+  - metavariable-regex:
+      metavariable: $CLASS
+      regex: \w*App(lication)?Delegate
+  paths:
+    include:
+      - "*AppDelegate.m"
+
+
