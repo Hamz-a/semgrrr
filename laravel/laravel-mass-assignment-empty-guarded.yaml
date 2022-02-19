@@ -1,0 +1,11 @@
+rules:
+- id: laravel-mass-assignment-empty-guarded
+  message: >-
+
+    Laravel disallows mass-assignments by default. Developers can use the $fillable property to explicitly allow certain fields to be mass-assigned. In contrast, the $guarded property can be used to explicitly disallow certain fields to be mass-assigned. However, by setting the value of the $guarded property to an empty array, the default protection mechanism provided by Laravel to thwart mass-assignment vulnerabilities is entirely disabled.
+  languages: [php]
+  severity: WARNING
+  patterns:
+    - pattern: $guarded = []
+    - pattern-inside: |
+        class $CLASS extends Model { ... }
